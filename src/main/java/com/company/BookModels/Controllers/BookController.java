@@ -54,13 +54,13 @@ public class BookController {
         ArrayList<Book> matchingBooks = new ArrayList<>();
         if (type.equals("author")){
             for(Book book : books) {
-                if (book.getAuthor().equalsIgnoreCase(keyword.toLowerCase())) {
+                if (book.getAuthor().equalsIgnoreCase(keyword)) {
                     matchingBooks.add(book);
                 }
             }
         } else if (type.equals("title")){
             for(Book book : books) {
-                if(book.getTitle().equalsIgnoreCase(keyword.toLowerCase())) {
+                if(book.getTitle().equalsIgnoreCase(keyword)) {
                     matchingBooks.add(book);
                 }
             }
