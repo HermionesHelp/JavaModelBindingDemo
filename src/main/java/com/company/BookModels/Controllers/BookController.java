@@ -13,8 +13,7 @@ import java.util.Locale;
 @Controller
 @RequestMapping(value = "/book")
 public class BookController {
-    // this is the container holding all of the books
-    public static ArrayList<Book> books = new ArrayList<>();
+
 
     // GET /book -> returns a JSON List of all the books
     @GetMapping
@@ -67,10 +66,5 @@ public class BookController {
         }
         model.addAttribute("books", matchingBooks);
         return "filterBooks";
-    }
-
-    // a helper method that adds a new book to our static books property
-    public static void addBook(Book book) {
-        books.add(book);
     }
 }
