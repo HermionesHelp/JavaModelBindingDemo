@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Added Successfully! maybe?</title>
+</head>
+<body>
+<p>The book <th:scope th:text="${bookName}"></th:scope> was added successfully!</p>
+</body>
+
+<div th:replace="fragments/menu-fragment :: menu-fragment"></div>
+</html>
