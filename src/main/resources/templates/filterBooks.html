@@ -9,10 +9,10 @@
 <h4 th:unless="${books.size() != 0}">No matches found</h4>
 
 <th:block th:each="book : ${books}">
-    <h4 th:text="${book.get('title')}"></h4>
+    <h4 th:text="${book.getTitle()}"></h4>
     <ul>
-        <li th:text="${book.get('author')}"></li>
-        <li th:text="${book.get('ISBN')}"></li>
+        <li th:text="${book.getAuthor()}"></li>
+        <li th:text="${book.getIsbn()}"></li>
     </ul>
 </th:block>
 

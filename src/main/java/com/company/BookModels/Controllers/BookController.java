@@ -1,21 +1,20 @@
 package com.company.BookModels.Controllers;
 
 
+import com.company.BookModels.Models.Book;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 @Controller
 @RequestMapping(value = "/book")
 public class BookController {
     // this is the container holding all of the books
-    public static ArrayList<HashMap<String, String>> books = new ArrayList<>();
+    public static ArrayList<Book> books = new ArrayList<>();
 
     // GET /book -> returns a JSON List of all the books
     @GetMapping
@@ -31,16 +30,17 @@ public class BookController {
         return "newBookForm";
     }
 
-    // POST /book/new -> takes in three query parameters: title, author, isbn and creates a new book out of these query parameters (these were the inputs of the HTML form in the GET handler)
+    // POST /book/new
     @PostMapping(value = "/new")
-    public String addBook(@RequestParam String title, @RequestParam String author, @RequestParam String isbn, Model model) {
-        HashMap<String, String> newBook = new HashMap<>();
-        newBook.put("title", title);
-        newBook.put("author", author);
-        newBook.put("ISBN", isbn);
+    public String addBook(@ModelAttribute Book newBook, Model model) {
+        // We no longer have to create a hashMap representation of our book. We can use our Book model
+//        HashMap<String, String> newBook = new HashMap<>();
+//        newBook.put("title", title);
+//        newBook.put("author", author);
+//        newBook.put("ISBN", isbn);
         // calls helper method that adds the new HashMap to the static ArrayList of HashMaps
         addBook(newBook);
-        model.addAttribute("bookName", title);
+        model.addAttribute("bookName", newBook.getTitle());
         return "bookAdded";
     }
 
@@ -51,16 +51,16 @@ public class BookController {
 
     @PostMapping(value = "/search")
     public String searchBooks(Model model, @RequestParam String type,@RequestParam String keyword){
-        ArrayList<HashMap<String, String>> matchingBooks = new ArrayList<>();
+        ArrayList<Book> matchingBooks = new ArrayList<>();
         if (type.equals("author")){
-            for(HashMap<String, String> book : books) {
-                if (book.get("author").toLowerCase().equals(keyword.toLowerCase())) {
+            for(Book book : books) {
+                if (book.getAuthor().equalsIgnoreCase(keyword.toLowerCase())) {
                     matchingBooks.add(book);
                 }
             }
         } else if (type.equals("title")){
-            for(HashMap<String, String> book : books) {
-                if(book.get("title").toLowerCase().equals(keyword.toLowerCase())) {
+            for(Book book : books) {
+                if(book.getTitle().equalsIgnoreCase(keyword.toLowerCase())) {
                     matchingBooks.add(book);
                 }
             }
@@ -70,7 +70,7 @@ public class BookController {
     }
 
     // a helper method that adds a new book to our static books property
-    public static void addBook(HashMap<String, String> book) {
+    public static void addBook(Book book) {
         books.add(book);
     }
 }
